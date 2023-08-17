@@ -1,10 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
-    //getting entered  value in inputbox on concole.
+    //getting entered  value in inputbox on concole.    
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const auth = localStorage.getItem('users');
+    if(auth) {
+        navigate('/')
+    }
+  })
 
   const handleName = (e) => {
     setName(e.target.value);
@@ -18,6 +27,10 @@ const Signup = () => {
   };
 
   const handleSignup = async () => {
+    setName('');
+    setEmail('');
+    setPassword('');
+    alert("SignUp success")
     console.warn({ email, password });
     //fetching API connecting API with frontend
     let result  =  await fetch("http://localhost:5000/register" , {
